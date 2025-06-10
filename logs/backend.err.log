@@ -1,0 +1,179 @@
+[2025-06-09 11:28:42 -0300] [1052] [INFO] Starting gunicorn 23.0.0
+[2025-06-09 11:28:42 -0300] [1052] [INFO] Listening at: http://0.0.0.0:9001 (1052)
+[2025-06-09 11:28:42 -0300] [1052] [INFO] Using worker: sync
+[2025-06-09 11:28:42 -0300] [1082] [INFO] Booting worker with pid: 1082
+[2025-06-09 11:33:43 -0300] [1052] [INFO] Handling signal: term
+[2025-06-09 14:33:43 +0000] [1082] [INFO] Worker exiting (pid: 1082)
+[2025-06-09 11:33:43 -0300] [1052] [INFO] Shutting down: Master
+[2025-06-09 14:20:39 -0300] [16423] [INFO] Starting gunicorn 23.0.0
+[2025-06-09 14:20:39 -0300] [16423] [INFO] Listening at: http://0.0.0.0:9001 (16423)
+[2025-06-09 14:20:39 -0300] [16423] [INFO] Using worker: sync
+[2025-06-09 14:20:39 -0300] [16424] [INFO] Booting worker with pid: 16424
+Unauthorized: /api/uploadarquivo/
+Unauthorized: /api/me/
+/home/inovedev/sistema_higienizacao/backend/arquivos/utils.py:44: FutureWarning: DataFrame.applymap has been deprecated. Use DataFrame.map instead.
+  df = df.applymap(lambda x: str(int(float(x))) if isinstance(x, float) else str(x))
+/home/inovedev/sistema_higienizacao/backend/arquivos/utils.py:44: FutureWarning: DataFrame.applymap has been deprecated. Use DataFrame.map instead.
+  df = df.applymap(lambda x: str(int(float(x))) if isinstance(x, float) else str(x))
+[2025-06-09 14:25:03 -0300] [16423] [CRITICAL] WORKER TIMEOUT (pid:16424)
+[2025-06-09 17:25:03 +0000] [16424] [ERROR] Error handling request (no URI read)
+Traceback (most recent call last):
+  File "/home/inovedev/sistema_higienizacao/venv/lib/python3.11/site-packages/gunicorn/workers/sync.py", line 133, in handle
+    req = next(parser)
+          ^^^^^^^^^^^^
+  File "/home/inovedev/sistema_higienizacao/venv/lib/python3.11/site-packages/gunicorn/http/parser.py", line 41, in __next__
+    self.mesg = self.mesg_class(self.cfg, self.unreader, self.source_addr, self.req_count)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/inovedev/sistema_higienizacao/venv/lib/python3.11/site-packages/gunicorn/http/message.py", line 259, in __init__
+    super().__init__(cfg, unreader, peer_addr)
+  File "/home/inovedev/sistema_higienizacao/venv/lib/python3.11/site-packages/gunicorn/http/message.py", line 60, in __init__
+    unused = self.parse(self.unreader)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/inovedev/sistema_higienizacao/venv/lib/python3.11/site-packages/gunicorn/http/message.py", line 271, in parse
+    self.get_data(unreader, buf, stop=True)
+  File "/home/inovedev/sistema_higienizacao/venv/lib/python3.11/site-packages/gunicorn/http/message.py", line 262, in get_data
+    data = unreader.read()
+           ^^^^^^^^^^^^^^^
+  File "/home/inovedev/sistema_higienizacao/venv/lib/python3.11/site-packages/gunicorn/http/unreader.py", line 36, in read
+    d = self.chunk()
+        ^^^^^^^^^^^^
+  File "/home/inovedev/sistema_higienizacao/venv/lib/python3.11/site-packages/gunicorn/http/unreader.py", line 63, in chunk
+    return self.sock.recv(self.mxchunk)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/inovedev/sistema_higienizacao/venv/lib/python3.11/site-packages/gunicorn/workers/base.py", line 204, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2025-06-09 17:25:03 +0000] [16424] [INFO] Worker exiting (pid: 16424)
+[2025-06-09 14:25:03 -0300] [16522] [INFO] Booting worker with pid: 16522
+/home/inovedev/sistema_higienizacao/backend/arquivos/utils.py:44: FutureWarning: DataFrame.applymap has been deprecated. Use DataFrame.map instead.
+  df = df.applymap(lambda x: str(int(float(x))) if isinstance(x, float) else str(x))
+/home/inovedev/sistema_higienizacao/backend/arquivos/utils.py:44: FutureWarning: DataFrame.applymap has been deprecated. Use DataFrame.map instead.
+  df = df.applymap(lambda x: str(int(float(x))) if isinstance(x, float) else str(x))
+/home/inovedev/sistema_higienizacao/backend/arquivos/utils.py:44: FutureWarning: DataFrame.applymap has been deprecated. Use DataFrame.map instead.
+  df = df.applymap(lambda x: str(int(float(x))) if isinstance(x, float) else str(x))
+/home/inovedev/sistema_higienizacao/backend/arquivos/utils.py:44: FutureWarning: DataFrame.applymap has been deprecated. Use DataFrame.map instead.
+  df = df.applymap(lambda x: str(int(float(x))) if isinstance(x, float) else str(x))
+/home/inovedev/sistema_higienizacao/backend/arquivos/utils.py:44: FutureWarning: DataFrame.applymap has been deprecated. Use DataFrame.map instead.
+  df = df.applymap(lambda x: str(int(float(x))) if isinstance(x, float) else str(x))
+/home/inovedev/sistema_higienizacao/backend/arquivos/utils.py:44: FutureWarning: DataFrame.applymap has been deprecated. Use DataFrame.map instead.
+  df = df.applymap(lambda x: str(int(float(x))) if isinstance(x, float) else str(x))
+[2025-06-09 14:40:46 -0300] [16423] [CRITICAL] WORKER TIMEOUT (pid:16522)
+[2025-06-09 17:40:46 +0000] [16522] [ERROR] Error handling request (no URI read)
+Traceback (most recent call last):
+  File "/home/inovedev/sistema_higienizacao/venv/lib/python3.11/site-packages/gunicorn/workers/sync.py", line 133, in handle
+    req = next(parser)
+          ^^^^^^^^^^^^
+  File "/home/inovedev/sistema_higienizacao/venv/lib/python3.11/site-packages/gunicorn/http/parser.py", line 41, in __next__
+    self.mesg = self.mesg_class(self.cfg, self.unreader, self.source_addr, self.req_count)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/inovedev/sistema_higienizacao/venv/lib/python3.11/site-packages/gunicorn/http/message.py", line 259, in __init__
+    super().__init__(cfg, unreader, peer_addr)
+  File "/home/inovedev/sistema_higienizacao/venv/lib/python3.11/site-packages/gunicorn/http/message.py", line 60, in __init__
+    unused = self.parse(self.unreader)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/inovedev/sistema_higienizacao/venv/lib/python3.11/site-packages/gunicorn/http/message.py", line 271, in parse
+    self.get_data(unreader, buf, stop=True)
+  File "/home/inovedev/sistema_higienizacao/venv/lib/python3.11/site-packages/gunicorn/http/message.py", line 262, in get_data
+    data = unreader.read()
+           ^^^^^^^^^^^^^^^
+  File "/home/inovedev/sistema_higienizacao/venv/lib/python3.11/site-packages/gunicorn/http/unreader.py", line 36, in read
+    d = self.chunk()
+        ^^^^^^^^^^^^
+  File "/home/inovedev/sistema_higienizacao/venv/lib/python3.11/site-packages/gunicorn/http/unreader.py", line 63, in chunk
+    return self.sock.recv(self.mxchunk)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/inovedev/sistema_higienizacao/venv/lib/python3.11/site-packages/gunicorn/workers/base.py", line 204, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2025-06-09 17:40:46 +0000] [16522] [INFO] Worker exiting (pid: 16522)
+[2025-06-09 14:40:46 -0300] [16786] [INFO] Booting worker with pid: 16786
+Not Found: /
+Not Found: /
+Unauthorized: /api/me/
+Unauthorized: /api/uploadarquivo/
+/home/inovedev/sistema_higienizacao/backend/arquivos/utils.py:44: FutureWarning: DataFrame.applymap has been deprecated. Use DataFrame.map instead.
+  df = df.applymap(lambda x: str(int(float(x))) if isinstance(x, float) else str(x))
+/home/inovedev/sistema_higienizacao/backend/arquivos/utils.py:44: FutureWarning: DataFrame.applymap has been deprecated. Use DataFrame.map instead.
+  df = df.applymap(lambda x: str(int(float(x))) if isinstance(x, float) else str(x))
+/home/inovedev/sistema_higienizacao/backend/arquivos/utils.py:44: FutureWarning: DataFrame.applymap has been deprecated. Use DataFrame.map instead.
+  df = df.applymap(lambda x: str(int(float(x))) if isinstance(x, float) else str(x))
+/home/inovedev/sistema_higienizacao/backend/arquivos/utils.py:44: FutureWarning: DataFrame.applymap has been deprecated. Use DataFrame.map instead.
+  df = df.applymap(lambda x: str(int(float(x))) if isinstance(x, float) else str(x))
+[2025-06-09 17:19:55 -0300] [16423] [INFO] Handling signal: term
+[2025-06-09 20:19:55 +0000] [16786] [INFO] Worker exiting (pid: 16786)
+[2025-06-09 17:19:55 -0300] [16423] [INFO] Shutting down: Master
+[2025-06-09 17:19:55 -0300] [22993] [INFO] Starting gunicorn 23.0.0
+[2025-06-09 17:19:55 -0300] [22993] [INFO] Listening at: http://0.0.0.0:9001 (22993)
+[2025-06-09 17:19:55 -0300] [22993] [INFO] Using worker: sync
+[2025-06-09 17:19:55 -0300] [22994] [INFO] Booting worker with pid: 22994
+/home/inovedev/sistema_higienizacao/backend/arquivos/utils.py:44: FutureWarning: DataFrame.applymap has been deprecated. Use DataFrame.map instead.
+  df = df.applymap(lambda x: str(int(float(x))) if isinstance(x, float) else str(x))
+/home/inovedev/sistema_higienizacao/backend/arquivos/utils.py:44: FutureWarning: DataFrame.applymap has been deprecated. Use DataFrame.map instead.
+  df = df.applymap(lambda x: str(int(float(x))) if isinstance(x, float) else str(x))
+[2025-06-09 17:31:00 -0300] [22993] [INFO] Handling signal: term
+[2025-06-09 20:31:00 +0000] [22994] [INFO] Worker exiting (pid: 22994)
+[2025-06-09 17:31:00 -0300] [22993] [INFO] Shutting down: Master
+[2025-06-09 17:31:00 -0300] [23186] [INFO] Starting gunicorn 23.0.0
+[2025-06-09 17:31:00 -0300] [23186] [INFO] Listening at: http://0.0.0.0:9001 (23186)
+[2025-06-09 17:31:00 -0300] [23186] [INFO] Using worker: sync
+[2025-06-09 17:31:00 -0300] [23187] [INFO] Booting worker with pid: 23187
+/home/inovedev/sistema_higienizacao/backend/arquivos/utils.py:44: FutureWarning: DataFrame.applymap has been deprecated. Use DataFrame.map instead.
+  df = df.applymap(lambda x: str(int(float(x))) if isinstance(x, float) else str(x))
+/home/inovedev/sistema_higienizacao/backend/arquivos/utils.py:44: FutureWarning: DataFrame.applymap has been deprecated. Use DataFrame.map instead.
+  df = df.applymap(lambda x: str(int(float(x))) if isinstance(x, float) else str(x))
+/home/inovedev/sistema_higienizacao/backend/arquivos/utils.py:44: FutureWarning: DataFrame.applymap has been deprecated. Use DataFrame.map instead.
+  df = df.applymap(lambda x: str(int(float(x))) if isinstance(x, float) else str(x))
+/home/inovedev/sistema_higienizacao/backend/arquivos/utils.py:44: FutureWarning: DataFrame.applymap has been deprecated. Use DataFrame.map instead.
+  df = df.applymap(lambda x: str(int(float(x))) if isinstance(x, float) else str(x))
+/home/inovedev/sistema_higienizacao/backend/arquivos/utils.py:44: FutureWarning: DataFrame.applymap has been deprecated. Use DataFrame.map instead.
+  df = df.applymap(lambda x: str(int(float(x))) if isinstance(x, float) else str(x))
+/home/inovedev/sistema_higienizacao/backend/arquivos/utils.py:44: FutureWarning: DataFrame.applymap has been deprecated. Use DataFrame.map instead.
+  df = df.applymap(lambda x: str(int(float(x))) if isinstance(x, float) else str(x))
+Unauthorized: /api/uploadarquivo/
+Unauthorized: /api/me/
+Unauthorized: /api/uploadarquivo/
+Unauthorized: /api/me/
+Unauthorized: /api/uploadarquivo/
+/home/inovedev/sistema_higienizacao/backend/arquivos/utils.py:44: FutureWarning: DataFrame.applymap has been deprecated. Use DataFrame.map instead.
+  df = df.applymap(lambda x: str(int(float(x))) if isinstance(x, float) else str(x))
+/home/inovedev/sistema_higienizacao/backend/arquivos/utils.py:44: FutureWarning: DataFrame.applymap has been deprecated. Use DataFrame.map instead.
+  df = df.applymap(lambda x: str(int(float(x))) if isinstance(x, float) else str(x))
+Not Found: /
+Not Found: /favicon.ico
+Not Found: /
+Unauthorized: /api/me/
+Unauthorized: /api/uploadarquivo/
+[2025-06-10 08:42:06 -0300] [23186] [CRITICAL] WORKER TIMEOUT (pid:23187)
+[2025-06-10 11:42:06 +0000] [23187] [ERROR] Error handling request (no URI read)
+Traceback (most recent call last):
+  File "/home/inovedev/sistema_higienizacao/venv/lib/python3.11/site-packages/gunicorn/workers/sync.py", line 133, in handle
+    req = next(parser)
+          ^^^^^^^^^^^^
+  File "/home/inovedev/sistema_higienizacao/venv/lib/python3.11/site-packages/gunicorn/http/parser.py", line 41, in __next__
+    self.mesg = self.mesg_class(self.cfg, self.unreader, self.source_addr, self.req_count)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/inovedev/sistema_higienizacao/venv/lib/python3.11/site-packages/gunicorn/http/message.py", line 259, in __init__
+    super().__init__(cfg, unreader, peer_addr)
+  File "/home/inovedev/sistema_higienizacao/venv/lib/python3.11/site-packages/gunicorn/http/message.py", line 60, in __init__
+    unused = self.parse(self.unreader)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/inovedev/sistema_higienizacao/venv/lib/python3.11/site-packages/gunicorn/http/message.py", line 271, in parse
+    self.get_data(unreader, buf, stop=True)
+  File "/home/inovedev/sistema_higienizacao/venv/lib/python3.11/site-packages/gunicorn/http/message.py", line 262, in get_data
+    data = unreader.read()
+           ^^^^^^^^^^^^^^^
+  File "/home/inovedev/sistema_higienizacao/venv/lib/python3.11/site-packages/gunicorn/http/unreader.py", line 36, in read
+    d = self.chunk()
+        ^^^^^^^^^^^^
+  File "/home/inovedev/sistema_higienizacao/venv/lib/python3.11/site-packages/gunicorn/http/unreader.py", line 63, in chunk
+    return self.sock.recv(self.mxchunk)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/inovedev/sistema_higienizacao/venv/lib/python3.11/site-packages/gunicorn/workers/base.py", line 204, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2025-06-10 11:42:06 +0000] [23187] [INFO] Worker exiting (pid: 23187)
+[2025-06-10 08:42:06 -0300] [35862] [INFO] Booting worker with pid: 35862
+/home/inovedev/sistema_higienizacao/backend/arquivos/utils.py:44: FutureWarning: DataFrame.applymap has been deprecated. Use DataFrame.map instead.
+  df = df.applymap(lambda x: str(int(float(x))) if isinstance(x, float) else str(x))
+/home/inovedev/sistema_higienizacao/backend/arquivos/utils.py:44: FutureWarning: DataFrame.applymap has been deprecated. Use DataFrame.map instead.
+  df = df.applymap(lambda x: str(int(float(x))) if isinstance(x, float) else str(x))
