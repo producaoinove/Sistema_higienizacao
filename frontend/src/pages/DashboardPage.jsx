@@ -252,28 +252,28 @@ export default function DashboardPage() {
                       <Typography variant="body1" color="success.main" sx={{ mt: 1.5, fontWeight: 500 }}>
                         <strong>Total retorno:</strong> {detalhesUpload.retorno}
                       </Typography>
-
-                      {detalhesUpload.arquivo_processado && (
-                        <Button
-                          variant="contained"
-                          color="primary"
-                          startIcon={<DownloadIcon />}
-                          href={detalhesUpload.arquivo_processado}
-                          target="_blank"
-                          sx={{ mt: 3 }}
-                        >
-                          Baixar Arquivo
-                        </Button>
-                      )}
                     </Box>
                   )}
                 </DialogContent>
                 <DialogActions sx={{ justifyContent: "center", pb: 2, flexDirection: "column", gap: 1 }}>
+                  {arquivos[0]?.arquivo_processado && (
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      fullWidth
+                      startIcon={<DownloadIcon />}
+                      href={arquivos[0].arquivo_processado}
+                      target="_blank"
+                    >
+                      Baixar Arquivo
+                    </Button>
+                  )}
                   <Button
-                    variant="outlined"
+                    variant="contained"
                     color="secondary"
+                    fullWidth
                     onClick={() => setOpenDialog(false)}
-                    sx={{ textTransform: "none", px: 4 }}
+                    sx={{ textTransform: 'none', px: 4 }}
                   >
                     Fechar
                   </Button>

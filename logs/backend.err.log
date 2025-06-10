@@ -177,3 +177,28 @@ SystemExit: 1
   df = df.applymap(lambda x: str(int(float(x))) if isinstance(x, float) else str(x))
 /home/inovedev/sistema_higienizacao/backend/arquivos/utils.py:44: FutureWarning: DataFrame.applymap has been deprecated. Use DataFrame.map instead.
   df = df.applymap(lambda x: str(int(float(x))) if isinstance(x, float) else str(x))
+[2025-06-10 10:09:27 -0300] [23186] [INFO] Handling signal: term
+[2025-06-10 13:09:27 +0000] [35862] [INFO] Worker exiting (pid: 35862)
+[2025-06-10 10:09:27 -0300] [23186] [INFO] Shutting down: Master
+[2025-06-10 10:09:27 -0300] [38462] [INFO] Starting gunicorn 23.0.0
+[2025-06-10 10:09:27 -0300] [38462] [INFO] Listening at: http://0.0.0.0:9001 (38462)
+[2025-06-10 10:09:27 -0300] [38462] [INFO] Using worker: sync
+[2025-06-10 10:09:27 -0300] [38463] [INFO] Booting worker with pid: 38463
+Unauthorized: /api/me/
+Unauthorized: /api/uploadarquivo/
+Unauthorized: /api/me/
+Unauthorized: /api/uploadarquivo/
+Unauthorized: /api/me/
+Unauthorized: /api/uploadarquivo/
+/home/inovedev/sistema_higienizacao/backend/arquivos/utils.py:44: FutureWarning: DataFrame.applymap has been deprecated. Use DataFrame.map instead.
+  df = df.applymap(lambda x: str(int(float(x))) if isinstance(x, float) else str(x))
+/home/inovedev/sistema_higienizacao/backend/arquivos/utils.py:44: FutureWarning: DataFrame.applymap has been deprecated. Use DataFrame.map instead.
+  df = df.applymap(lambda x: str(int(float(x))) if isinstance(x, float) else str(x))
+/home/inovedev/sistema_higienizacao/backend/arquivos/utils.py:44: FutureWarning: DataFrame.applymap has been deprecated. Use DataFrame.map instead.
+  df = df.applymap(lambda x: str(int(float(x))) if isinstance(x, float) else str(x))
+/home/inovedev/sistema_higienizacao/backend/arquivos/utils.py:44: FutureWarning: DataFrame.applymap has been deprecated. Use DataFrame.map instead.
+  df = df.applymap(lambda x: str(int(float(x))) if isinstance(x, float) else str(x))
+/home/inovedev/sistema_higienizacao/backend/arquivos/utils.py:44: FutureWarning: DataFrame.applymap has been deprecated. Use DataFrame.map instead.
+  df = df.applymap(lambda x: str(int(float(x))) if isinstance(x, float) else str(x))
+/home/inovedev/sistema_higienizacao/backend/arquivos/utils.py:44: FutureWarning: DataFrame.applymap has been deprecated. Use DataFrame.map instead.
+  df = df.applymap(lambda x: str(int(float(x))) if isinstance(x, float) else str(x))
