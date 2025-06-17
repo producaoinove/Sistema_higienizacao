@@ -3,7 +3,26 @@ import uuid
 import re
 import os
 from django.conf import settings
-from .models import Blacklist
+from .models import BlacklistGlobal, EmpresaBlacklist
+
+
+def obter_blacklist(instancia, tipo_filtro: str) -> set:
+    numeros = set()
+
+    if tipo_filtro in ["cliente", "ambos"]:
+        numeros.update(
+            EmpresaBlacklist.objects
+            .filter(empresa=instancia.empresa)
+            .select_related("blacklist")
+            .values_list("blacklist__numero", flat=True)
+        )
+
+    if tipo_filtro in ["global", "ambos"]:
+        numeros.update(
+            BlacklistGlobal.objects.all().values_list("numero", flat=True)
+        )
+
+    return numeros
 
 def padronizar_numero(ddd: str, telefone: str) -> str:
     if not telefone:
@@ -16,8 +35,8 @@ def padronizar_numero(ddd: str, telefone: str) -> str:
         return ddd + telefone
     return None
 
-def processar_arquivo(instancia):
-    base_blacklist = set(b.numero for b in Blacklist.objects.all())
+def processar_arquivo(instancia, tipo_filtro="cliente"):
+    base_blacklist = obter_blacklist(instancia, tipo_filtro)
     print(f"[DEBUG] Blacklist com {len(base_blacklist)} números")
 
     ext = os.path.splitext(instancia.arquivo_original.name)[-1].lower()
@@ -68,7 +87,7 @@ def processar_arquivo(instancia):
 
     for i in range(1, 11):
         ddd_opcoes = [f"TE.{i-1}", f"DDD{i}", "TE"] if i == 1 else [f"TE.{i-1}", f"DDD{i}"]
-        tel_opcoes = [f"LEFONE {i}", f"TEL{i}", f"NÚMERO{i}", f"NUMERO{i}"]
+        tel_opcoes = [f"LEFONE {i}", f"TEL{i}", f"NÚMERO{i}", f"NUMERO{i}", f"TELEFONE{i}"]
 
         ddd_col = next((col for col in ddd_opcoes if col in df.columns), None)
         tel_col_nome = next((col for col in tel_opcoes if col in df.columns), None)

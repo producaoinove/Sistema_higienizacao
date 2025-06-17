@@ -6,6 +6,7 @@ import axios from "axios";
 export default function Navbar() {
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
+  const [isMaster, setIsMaster] = useState(false);
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -23,6 +24,7 @@ export default function Navbar() {
         })
         .then((res) => {
           setUsername(res.data.username);
+          setIsMaster(res.data.is_master);
         })
         .catch(() => {
           setUsername("");
@@ -43,12 +45,22 @@ export default function Navbar() {
         </Typography>
         <Box display="flex" alignItems="center" gap={2}>
           {username && (
-            <Typography variant="body1" sx={{ color: "white" }}>
-              Olá, {username} 👋
-            </Typography>
+            <>
+              <Typography variant="body1" sx={{ color: "white" }}>
+                Olá, {username} 👋
+              </Typography>
+
+              <Button color="inherit" onClick={() => navigate("/")}>Dashboard</Button>
+              <Button color="inherit" onClick={() => navigate("/minha-blacklist")}>Minha Blacklist</Button>
+
+              {isMaster && (
+                <Button color="inherit" onClick={() => navigate("/equipe")}>Equipe</Button>
+              )}
+
+              <Button color="inherit" onClick={() => navigate("/perfil")}>Perfil</Button>
+              
+            </>
           )}
-          <Button color="inherit" onClick={() => navigate("/")}>Dashboard</Button>
-          <Button color="inherit" onClick={() => navigate("/perfil")}>Perfil</Button>
           <Button color="inherit" onClick={handleLogout}>Sair</Button>
         </Box>
       </Toolbar>

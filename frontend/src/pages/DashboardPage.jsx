@@ -19,11 +19,12 @@ import {
   DialogTitle,
   DialogContent,
   DialogActions,
-  DialogContentText,
+  FormControl, FormLabel, FormGroup, FormControlLabel, Checkbox
 } from "@mui/material";
 import DownloadIcon from "@mui/icons-material/Download";
 import InsertDriveFileIcon from "@mui/icons-material/InsertDriveFile";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+
 
 
 export default function DashboardPage() {
@@ -34,8 +35,13 @@ export default function DashboardPage() {
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [detalhesUpload, setDetalhesUpload] = useState(null);
   const [openDialog, setOpenDialog] = useState(false);
+  const [tipoFiltro, setTipoFiltro] = useState("global");
+
+
+
 
   const fetchArquivos = async () => {
+    setLoading(true); // <- isso é o que faltava
     const token = localStorage.getItem("token");
     try {
       const response = await axios.get("http://168.121.7.194:9001/api/uploadarquivo/", {
@@ -51,7 +57,14 @@ export default function DashboardPage() {
     }
   };
 
+
   useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      window.location.href = "/login";
+      return;
+    }
+
     fetchArquivos();
   }, []);
 
@@ -69,15 +82,17 @@ export default function DashboardPage() {
       arquivo_processado: null,
     };
 
-    // ⏳ Adiciona o card visual imediatamente
-    setArquivos(prev => [novoArquivo, ...prev]);
+    // ⏳ Mostra o card visual imediatamente
+    setArquivos((prev) => [novoArquivo, ...prev]);
 
     const formData = new FormData();
     formData.append("arquivo_original", file);
+    formData.append("tipo_filtro", tipoFiltro);
 
     const token = localStorage.getItem("token");
 
     try {
+      // 🔄 Envia o arquivo
       const response = await axios.post("http://168.121.7.194:9001/api/upload/", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
@@ -85,11 +100,14 @@ export default function DashboardPage() {
         },
       });
 
-      // ✅ Atualiza os dados depois do upload e processamento
-      fetchArquivos();
+      console.log("✅ RESPOSTA:", response.data);
 
-      console.log(response.data);
-      console.log(detalhesUpload)
+      // ⏱️ Aguarda um tempo (opcional, depende do processamento no backend)
+      await new Promise(resolve => setTimeout(resolve, 3000));
+
+      // 🔄 Atualiza os arquivos reais após o backend processar
+      await fetchArquivos();
+
       setDetalhesUpload({
         total: response.data.total_entrada,
         removidos: response.data.total_removidos,
@@ -100,12 +118,26 @@ export default function DashboardPage() {
       setOpenDialog(true);
       setStatusMsg("Arquivo enviado com sucesso!");
     } catch (error) {
-      setStatusMsg("Erro ao enviar o arquivo.");
+      if (error.response) {
+        if (error.response.status === 401) {
+          localStorage.removeItem("token");
+          window.location.href = "/login";
+          return;
+        }
+        console.error("❌ ERRO BACKEND:", error.response.data);
+        setStatusMsg(error.response.data?.detail || "Erro ao enviar o arquivo.");
+      } else {
+        console.error("❌ ERRO GERAL:", error);
+        setStatusMsg("Erro inesperado.");
+      }
     } finally {
       setOpenSnackbar(true);
       setFile(null);
+      document.getElementById("upload-input").value = "";
     }
   };
+
+
 
 
   return (
@@ -154,6 +186,72 @@ export default function DashboardPage() {
           <Button variant="outlined" component="span" sx={{ mt: 2 }}>
             Escolher Arquivo
           </Button>
+
+          <Typography sx={{ mt: 2, fontWeight: 'bold', color: '#0d6efd' }}>
+            Selecione uma das opções de blacklist:
+          </Typography>
+
+          <FormControl component="fieldset" sx={{ mt: 1 }}>
+            <FormGroup row>
+              {[
+                { label: "Minha Blacklist", value: "cliente" },
+                { label: "Blacklist do Sistema", value: "global" },
+                { label: "Usar as Duas", value: "ambos" },
+              ].map((opcao) => (
+                <FormControlLabel
+                  key={opcao.value}
+                  control={
+                    <Checkbox
+                      checked={tipoFiltro === opcao.value}
+                      onChange={() => setTipoFiltro(opcao.value)}
+                      checkedIcon={<span style={{ color: "#2196f3" }}>✅</span>}
+                    />
+                  }
+                  label={opcao.label}
+                />
+              ))}
+            </FormGroup>
+          </FormControl>
+
+          <Box
+            mt={2}
+            p={2}
+            border="1px dashed #90caf9"
+            borderRadius={2}
+            bgcolor="#e3f2fd"
+            textAlign="left"
+          >
+            <Typography variant="subtitle2" color="primary" fontWeight="bold" gutterBottom>
+              📌 Como deve estar sua planilha:
+            </Typography>
+
+            <Typography variant="body2" color="text.primary" gutterBottom>
+              O sistema reconhece automaticamente os números de telefone e DDD se as colunas tiverem os seguintes nomes:
+            </Typography>
+
+            <Typography variant="body2" color="text.secondary" component="div">
+              <ul style={{ paddingLeft: 20, marginTop: 8 }}>
+                <li>
+                  <strong>Colunas de telefone:</strong> <code>TEL1 a TEL10</code>, <code>TELEFONE1 a TELEFONE10</code>, <code>LEFONE 1 a LEFONE 10</code>, <code>NÚMERO1 a NÚMERO10</code>, <code>NUMERO1 a NUMERO10</code>, etc.
+                </li>
+                <li>
+                  <strong>Colunas de DDD:</strong> <code>DDD1 a DDD10</code>, <code>TE.1 a TE.10</code>, etc.
+                </li>
+                <li>
+                  <strong>Coluna com DDD e número juntos:</strong> o sistema aceita colunas únicas com nomes como <code>telefone_completo</code>, <code>celular</code>, <code>número</code>, <code>tel_cliente</code>, <code>fone1</code>, etc.
+                </li>
+                <li>
+                  O sistema também reconhece colunas que contenham no nome as palavras <em>tel</em>, <em>fone</em>, <em>cel</em> ou <em>número</em>, mesmo com acento.
+                </li>
+              </ul>
+            </Typography>
+
+            <Typography variant="body2" sx={{ mt: 1 }}>
+              ✅ Não é necessário mapear colunas manualmente. Basta que os nomes estejam corretos.
+            </Typography>
+          </Box>
+
+
         </label>
 
         {file && (
@@ -168,9 +266,9 @@ export default function DashboardPage() {
             color="primary"
             startIcon={<CloudUploadIcon />}
             onClick={handleUpload}
-            disabled={!file}
+            disabled={!file || !tipoFiltro}
           >
-            Enviar Arquivo xlsx ou csv
+            Enviar Arquivo csv
           </Button>
         </Box>
       </Box>

@@ -23,6 +23,8 @@ export default function HistoricoPage() {
   const [busca, setBusca] = useState("");
   const [dataInicio, setDataInicio] = useState("");
   const [dataFim, setDataFim] = useState("");
+  const [paginaAtual, setPaginaAtual] = useState(1);
+  const itensPorPagina = 6;
 
   const fetchArquivos = async () => {
     const token = localStorage.getItem("token");
@@ -56,6 +58,11 @@ export default function HistoricoPage() {
     return nome.includes(busca.toLowerCase()) && dentroDoIntervalo;
   });
 
+  const totalPaginas = Math.ceil(arquivosFiltrados.length / itensPorPagina);
+  const indiceInicial = (paginaAtual - 1) * itensPorPagina;
+  const indiceFinal = indiceInicial + itensPorPagina;
+  const arquivosPaginados = arquivosFiltrados.slice(indiceInicial, indiceFinal);
+
   return (
     <Container maxWidth="lg">
       <Box mt={5} mb={3} textAlign="center">
@@ -72,7 +79,10 @@ export default function HistoricoPage() {
             variant="outlined"
             size="small"
             value={busca}
-            onChange={(e) => setBusca(e.target.value)}
+            onChange={(e) => {
+              setBusca(e.target.value);
+              setPaginaAtual(1);
+            }}
             sx={{ width: 250 }}
           />
           <TextField
@@ -80,7 +90,10 @@ export default function HistoricoPage() {
             type="date"
             size="small"
             value={dataInicio}
-            onChange={(e) => setDataInicio(e.target.value)}
+            onChange={(e) => {
+              setDataInicio(e.target.value);
+              setPaginaAtual(1);
+            }}
             InputLabelProps={{ shrink: true }}
           />
           <TextField
@@ -88,7 +101,10 @@ export default function HistoricoPage() {
             type="date"
             size="small"
             value={dataFim}
-            onChange={(e) => setDataFim(e.target.value)}
+            onChange={(e) => {
+              setDataFim(e.target.value);
+              setPaginaAtual(1);
+            }}
             InputLabelProps={{ shrink: true }}
           />
         </Box>
@@ -100,14 +116,14 @@ export default function HistoricoPage() {
         </Box>
       ) : (
         <Grid container spacing={4}>
-          {arquivosFiltrados.map((item) => (
+          {arquivosPaginados.map((item) => (
             <Grid item xs={12} sm={6} md={4} key={item.id}>
               <Card elevation={4} sx={{ borderRadius: 3 }}>
                 <CardContent>
                   <Box display="flex" alignItems="center" gap={1} mb={1}>
                     <InsertDriveFileIcon color="primary" />
                     <Typography variant="h6" noWrap>
-                      {item.arquivo_original?.split("/").pop()}
+                      {item.arquivo_original?.split("/").pop() || "Arquivo sem nome"}
                     </Typography>
                   </Box>
                   <Typography variant="body2" color="text.secondary">
@@ -148,6 +164,27 @@ export default function HistoricoPage() {
             </Grid>
           ))}
         </Grid>
+      )}
+      {totalPaginas > 1 && (
+        <Box mt={4} display="flex" justifyContent="center" alignItems="center" gap={2}>
+          <Button
+            variant="outlined"
+            onClick={() => setPaginaAtual((prev) => Math.max(prev - 1, 1))}
+            disabled={paginaAtual === 1}
+          >
+            Anterior
+          </Button>
+          <Typography>
+            Página {paginaAtual} de {totalPaginas}
+          </Typography>
+          <Button
+            variant="outlined"
+            onClick={() => setPaginaAtual((prev) => Math.min(prev + 1, totalPaginas))}
+            disabled={paginaAtual === totalPaginas}
+          >
+            Próxima
+          </Button>
+        </Box>
       )}
     </Container>
   );

@@ -1,10 +1,17 @@
 {% extends "admin/base_site.html" %}
+
 {% block content %}
-  <h2>{{ title }}</h2>
-  <form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="default">Importar</button>
-  </form>
-  <p><a href="../">← Voltar</a></p>
+  <div class="module aligned">
+    <h2 style="margin-bottom: 20px;">{{ title }}</h2>
+
+    <form method="post" enctype="multipart/form-data" class="form-row">
+      {% csrf_token %}
+      {{ form.as_p }}
+
+      <div style="margin-top: 20px;">
+        <button type="submit" class="button" style="background-color:#1976d2; color:white;">📤 Importar Arquivo</button>
+        <a href=".." class="button cancel-link">Voltar</a>
+      </div>
+    </form>
+  </div>
 {% endblock %}

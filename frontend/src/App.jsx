@@ -6,6 +6,8 @@ import DashboardPage from "./pages/DashboardPage";
 import Layout from "./pages/Layout";
 import PerfilPage from "./pages/PerfilPage";
 import HistoricoPage from "./pages/HistoricoPage";
+import MinhaBlacklistPage from "./pages/MinhaBlacklistPage";
+import EquipePage from "./pages/EquipePage";
 
 function App() {
   const token = localStorage.getItem("token");
@@ -26,6 +28,8 @@ function App() {
           <Route index element={<DashboardPage />} />
           <Route path="perfil" element={<PerfilPage />} />
           <Route path="historico" element={<HistoricoPage />} />
+          <Route path="/minha-blacklist" element={<MinhaBlacklistPage />} />
+          <Route path="/equipe" element={<EquipePage />} />
         </Route>
 
         {/* Redirecionamento padrão */}

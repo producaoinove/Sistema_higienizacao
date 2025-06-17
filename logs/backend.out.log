@@ -10,3 +10,68 @@
 [DEBUG] Blacklist com 68343 números
 [DEBUG] Blacklist com 68343 números
 [DEBUG] Blacklist com 68343 números
+[DEBUG] Blacklist com 68343 números
+[DEBUG] Blacklist com 68343 números
+[DEBUG] Blacklist com 68343 números
+[DEBUG] Blacklist com 68343 números
+Bad Request: /api/upload/
+Bad Request: /api/upload/
+Bad Request: /api/upload/
+Bad Request: /api/upload/
+📦 request.data: <QueryDict: {'tipo_filtro': ['cliente'], 'arquivo_original': [<InMemoryUploadedFile: BL_BRASILCOM_MAIO_01-04-2025ATE31-04-2025.csv (text/csv)>]}>
+📂 request.FILES: <MultiValueDict: {'arquivo_original': [<InMemoryUploadedFile: BL_BRASILCOM_MAIO_01-04-2025ATE31-04-2025.csv (text/csv)>]}>
+[DEBUG] Blacklist carregada com 1 números
+📦 request.data: <QueryDict: {'tipo_filtro': ['global'], 'arquivo_original': [<InMemoryUploadedFile: BL_BRASILCOM_MAIO_01-04-2025ATE31-04-2025.csv (text/csv)>]}>
+📂 request.FILES: <MultiValueDict: {'arquivo_original': [<InMemoryUploadedFile: BL_BRASILCOM_MAIO_01-04-2025ATE31-04-2025.csv (text/csv)>]}>
+[DEBUG] Blacklist carregada com 1 números
+📦 request.data: <QueryDict: {'tipo_filtro': ['ambos'], 'arquivo_original': [<InMemoryUploadedFile: BL_BRASILCOM_MAIO_01-04-2025ATE31-04-2025.csv (text/csv)>]}>
+📂 request.FILES: <MultiValueDict: {'arquivo_original': [<InMemoryUploadedFile: BL_BRASILCOM_MAIO_01-04-2025ATE31-04-2025.csv (text/csv)>]}>
+[DEBUG] Blacklist carregada com 2 números
+📦 request.data: <QueryDict: {'tipo_filtro': ['ambos'], 'arquivo_original': [<InMemoryUploadedFile: BL_BRASILCOM_MAIO_01-04-2025ATE31-04-2025.csv (text/csv)>]}>
+📂 request.FILES: <MultiValueDict: {'arquivo_original': [<InMemoryUploadedFile: BL_BRASILCOM_MAIO_01-04-2025ATE31-04-2025.csv (text/csv)>]}>
+[DEBUG] Blacklist carregada com 2 números
+📦 request.data: <QueryDict: {'tipo_filtro': ['global'], 'arquivo_original': [<TemporaryUploadedFile: RN_MEI_MOVEIS_GERAL_12-06.xlsx (application/vnd.openxmlformats-officedocument.spreadsheetml.sheet)>]}>
+📂 request.FILES: <MultiValueDict: {'arquivo_original': [<TemporaryUploadedFile: RN_MEI_MOVEIS_GERAL_12-06.xlsx (application/vnd.openxmlformats-officedocument.spreadsheetml.sheet)>]}>
+[DEBUG] Blacklist carregada com 371015 números
+📦 request.data: <QueryDict: {'tipo_filtro': ['global'], 'arquivo_original': [<TemporaryUploadedFile: RN_MEI_MOVEIS_GERAL_12-06.xlsx (application/vnd.openxmlformats-officedocument.spreadsheetml.sheet)>]}>
+📂 request.FILES: <MultiValueDict: {'arquivo_original': [<TemporaryUploadedFile: RN_MEI_MOVEIS_GERAL_12-06.xlsx (application/vnd.openxmlformats-officedocument.spreadsheetml.sheet)>]}>
+[DEBUG] Blacklist carregada com 371015 números
+📦 request.data: <QueryDict: {'tipo_filtro': ['global'], 'arquivo_original': [<TemporaryUploadedFile: RN_MEI_MOVEIS_GERAL_12-06.xlsx (application/vnd.openxmlformats-officedocument.spreadsheetml.sheet)>]}>
+📂 request.FILES: <MultiValueDict: {'arquivo_original': [<TemporaryUploadedFile: RN_MEI_MOVEIS_GERAL_12-06.xlsx (application/vnd.openxmlformats-officedocument.spreadsheetml.sheet)>]}>
+[DEBUG] Blacklist carregada com 371015 números
+📦 request.data: <QueryDict: {'tipo_filtro': ['global'], 'arquivo_original': [<TemporaryUploadedFile: Grande Vitoria_Multiplus_Empresarios.csv (text/csv)>]}>
+📂 request.FILES: <MultiValueDict: {'arquivo_original': [<TemporaryUploadedFile: Grande Vitoria_Multiplus_Empresarios.csv (text/csv)>]}>
+[DEBUG] Blacklist carregada com 371015 números
+📦 request.data: <QueryDict: {'tipo_filtro': ['global'], 'arquivo_original': [<TemporaryUploadedFile: Grande Vitoria_Multiplus_Empresarios.csv (text/csv)>]}>
+📂 request.FILES: <MultiValueDict: {'arquivo_original': [<TemporaryUploadedFile: Grande Vitoria_Multiplus_Empresarios.csv (text/csv)>]}>
+[DEBUG] Blacklist carregada com 371015 números
+📦 request.data: <QueryDict: {'tipo_filtro': ['global'], 'arquivo_original': [<TemporaryUploadedFile: Grande Vitoria_Multiplus_Empresarios.csv (text/csv)>]}>
+📂 request.FILES: <MultiValueDict: {'arquivo_original': [<TemporaryUploadedFile: Grande Vitoria_Multiplus_Empresarios.csv (text/csv)>]}>
+[DEBUG] Blacklist com 371016 números
+📦 request.data: <QueryDict: {'tipo_filtro': ['global'], 'arquivo_original': [<TemporaryUploadedFile: Grande Vitoria_Multiplus_Empresarios.csv (text/csv)>]}>
+📂 request.FILES: <MultiValueDict: {'arquivo_original': [<TemporaryUploadedFile: Grande Vitoria_Multiplus_Empresarios.csv (text/csv)>]}>
+[DEBUG] Blacklist com 371016 números
+📦 request.data: <QueryDict: {'tipo_filtro': ['global'], 'arquivo_original': [<TemporaryUploadedFile: Grande Vitoria_Multiplus_Empresarios.csv (text/csv)>]}>
+📂 request.FILES: <MultiValueDict: {'arquivo_original': [<TemporaryUploadedFile: Grande Vitoria_Multiplus_Empresarios.csv (text/csv)>]}>
+[DEBUG] Blacklist com 371016 números
+📦 request.data: <QueryDict: {'tipo_filtro': ['global'], 'arquivo_original': [<TemporaryUploadedFile: RN_MEI_MOVEIS_GERAL_12-06.CSV (text/csv)>]}>
+📂 request.FILES: <MultiValueDict: {'arquivo_original': [<TemporaryUploadedFile: RN_MEI_MOVEIS_GERAL_12-06.CSV (text/csv)>]}>
+[DEBUG] Blacklist com 371016 números
+📦 request.data: <QueryDict: {'tipo_filtro': ['ambos'], 'arquivo_original': [<TemporaryUploadedFile: RN_MEI_MOVEIS_GERAL_12-06_processado.csv (text/csv)>]}>
+📂 request.FILES: <MultiValueDict: {'arquivo_original': [<TemporaryUploadedFile: RN_MEI_MOVEIS_GERAL_12-06_processado.csv (text/csv)>]}>
+[DEBUG] Blacklist com 371017 números
+📦 request.data: <QueryDict: {'tipo_filtro': ['global'], 'arquivo_original': [<TemporaryUploadedFile: Grande_Vitoria_Multiplus_Empresarios_KCTBpRs_processado.csv (text/csv)>]}>
+📂 request.FILES: <MultiValueDict: {'arquivo_original': [<TemporaryUploadedFile: Grande_Vitoria_Multiplus_Empresarios_KCTBpRs_processado.csv (text/csv)>]}>
+[DEBUG] Blacklist com 371015 números
+📦 request.data: <QueryDict: {'tipo_filtro': ['global'], 'arquivo_original': [<TemporaryUploadedFile: Grande Vitoria_Multiplus_Empresarios.csv (text/csv)>]}>
+📂 request.FILES: <MultiValueDict: {'arquivo_original': [<TemporaryUploadedFile: Grande Vitoria_Multiplus_Empresarios.csv (text/csv)>]}>
+[DEBUG] Blacklist com 371015 números
+📦 request.data: <QueryDict: {'tipo_filtro': ['ambos'], 'arquivo_original': [<TemporaryUploadedFile: Grande Vitoria_Multiplus_Empresarios.csv (text/csv)>]}>
+📂 request.FILES: <MultiValueDict: {'arquivo_original': [<TemporaryUploadedFile: Grande Vitoria_Multiplus_Empresarios.csv (text/csv)>]}>
+[DEBUG] Blacklist com 371017 números
+📦 request.data: <QueryDict: {'tipo_filtro': ['cliente'], 'arquivo_original': [<TemporaryUploadedFile: RN_MEI_MOVEIS_GERAL_12-06.CSV (text/csv)>]}>
+📂 request.FILES: <MultiValueDict: {'arquivo_original': [<TemporaryUploadedFile: RN_MEI_MOVEIS_GERAL_12-06.CSV (text/csv)>]}>
+[DEBUG] Blacklist com 61545 números
+📦 request.data: <QueryDict: {'tipo_filtro': ['global'], 'arquivo_original': [<InMemoryUploadedFile: NAOMEI_MAILING_SUZANA_MT_GERAL.csv (text/csv)>]}>
+📂 request.FILES: <MultiValueDict: {'arquivo_original': [<InMemoryUploadedFile: NAOMEI_MAILING_SUZANA_MT_GERAL.csv (text/csv)>]}>
+[DEBUG] Blacklist com 371015 números
