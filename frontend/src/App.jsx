@@ -8,6 +8,10 @@ import PerfilPage from "./pages/PerfilPage";
 import HistoricoPage from "./pages/HistoricoPage";
 import MinhaBlacklistPage from "./pages/MinhaBlacklistPage";
 import EquipePage from "./pages/EquipePage";
+import ConfirmResetPasswordPage from "./pages/ConfirmResetPasswordPage";
+import GerarMailingPage from "./pages/GerarMailingPage";
+
+
 
 function App() {
   const token = localStorage.getItem("token");
@@ -19,6 +23,7 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/esqueci-senha" element={<ForgotPasswordPage />} />
+        <Route path="/redefinir-senha/:uidb64/:token" element={<ConfirmResetPasswordPage />} />
 
         {/* Rotas privadas */}
         <Route
@@ -30,10 +35,11 @@ function App() {
           <Route path="historico" element={<HistoricoPage />} />
           <Route path="/minha-blacklist" element={<MinhaBlacklistPage />} />
           <Route path="/equipe" element={<EquipePage />} />
+          <Route path="gerarMailing" element={<GerarMailingPage />} />
         </Route>
 
         {/* Redirecionamento padrão */}
-        <Route path="*" element={<Navigate to="/" />} />
+        <Route path="*" element={<Navigate to={token ? "/" : "/login"} />} />
       </Routes>
     </BrowserRouter>
   );

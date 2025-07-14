@@ -7,11 +7,13 @@ import {
   Typography,
   Snackbar,
   Alert,
+  Link
 } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAlerta } from "../components/AlertSnackbar";
-import axios from "axios";
+import api from "../services/api";
+import logo from "../assets/logo.png";
 
 export default function RegisterPage() {
   const navigate = useNavigate();
@@ -24,7 +26,7 @@ export default function RegisterPage() {
 
   const handleRegister = async () => {
     try {
-      await axios.post("http://168.121.7.194:9001/api/register/", {
+      await api.post("register/", {
         username,
         email,
         password: senha,
@@ -37,25 +39,123 @@ export default function RegisterPage() {
   };
 
   return (
-    <Container maxWidth="sm">
-      <Paper elevation={4} sx={{ mt: 10, p: 4, borderRadius: 3 }}>
-        <Typography variant="h5" fontWeight="bold" gutterBottom align="center">
-          ✍️ Criar Conta
+    <Box
+      sx={{
+        minHeight: "100vh",
+        background: "#EAF0F6",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        py: 8,
+      }}
+    >
+      <Paper
+        elevation={8}
+        sx={{
+          p: 4,
+          width: "100%",
+          maxWidth: 400,
+          backgroundColor: "#0F1621",
+          borderRadius: 3,
+        }}
+      >
+        <Box display="flex" justifyContent="center" mb={2}>
+          <img
+            src={logo}
+            alt="Invertus"
+            sx={{
+              width: 40,
+              height: 40,
+              background: "#0057D8",
+              borderRadius: 2,
+            }}
+          />
+        </Box>
+
+        <Typography
+          variant="h6"
+          align="center"
+          fontWeight="bold"
+          color="#FFFFFF"
+          gutterBottom
+        >
+          Criar Conta
         </Typography>
 
-        <TextField label="Usuário" fullWidth margin="normal" value={username} onChange={(e) => setUsername(e.target.value)} />
-        <TextField label="Email" fullWidth margin="normal" value={email} onChange={(e) => setEmail(e.target.value)} />
-        <TextField label="Senha" type="password" fullWidth margin="normal" value={senha} onChange={(e) => setSenha(e.target.value)} />
+        <TextField
+          label="Usuário"
+          fullWidth
+          margin="normal"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          InputProps={{
+            style: { backgroundColor: "#1A1E24", color: "#fff" },
+          }}
+          InputLabelProps={{ style: { color: "#AEB4C0" } }}
+        />
+        <TextField
+          label="Email"
+          fullWidth
+          margin="normal"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          InputProps={{
+            style: { backgroundColor: "#1A1E24", color: "#fff" },
+          }}
+          InputLabelProps={{ style: { color: "#AEB4C0" } }}
+        />
+        <TextField
+          label="Senha"
+          type="password"
+          fullWidth
+          margin="normal"
+          value={senha}
+          onChange={(e) => setSenha(e.target.value)}
+          InputProps={{
+            style: { backgroundColor: "#1A1E24", color: "#fff" },
+          }}
+          InputLabelProps={{ style: { color: "#AEB4C0" } }}
+        />
 
-        <Button fullWidth variant="contained" sx={{ mt: 2 }} onClick={handleRegister}>
+        <Button
+          fullWidth
+          onClick={handleRegister}
+          sx={{
+            mt: 3,
+            background: "linear-gradient(to right, #0057D8, #00B2FF)",
+            color: "#fff",
+            fontWeight: "bold",
+            borderRadius: 2,
+            "&:hover": {
+              background: "linear-gradient(to right, #004bbd, #00a2e0)",
+            },
+          }}
+        >
           Criar Conta
         </Button>
+
+        <Box display="flex" justifyContent="space-between" mt={3}>
+          <Link
+            onClick={() => navigate("/login")}
+            underline="hover"
+            sx={{ color: "#007BFF", cursor: "pointer", fontSize: 13 }}
+          >
+            Já tenho conta
+          </Link>
+          <Link
+            onClick={() => navigate("/esqueci-senha")}
+            underline="hover"
+            sx={{ color: "#007BFF", cursor: "pointer", fontSize: 13 }}
+          >
+            Esqueci minha senha
+          </Link>
+        </Box>
       </Paper>
 
       <Snackbar open={!!msg} autoHideDuration={4000} onClose={() => setMsg("")}>
         <Alert severity={tipo} onClose={() => setMsg("")}>{msg}</Alert>
       </Snackbar>
       <AlertaComponent />
-    </Container>
+    </Box>
   );
 }

@@ -14,16 +14,26 @@ SECRET_KEY = "django-insecure-xr)_spp0661g-70aut=aw68tq#w&z+8zk0!!pnmu5+0bi-e#as
 
 DEBUG = True
 
-ALLOWED_HOSTS = ['168.121.7.194', 'localhost','127.0.0.1']
+ALLOWED_HOSTS = [
+    '168.121.7.194',
+    'localhost',
+    '127.0.0.1',
+    'contatos.invertusmkt.com.br',
+]
 
+
+FRONTEND_URL = "http://contatos.invertusmkt.com.br"
 
 
 
 CSRF_TRUSTED_ORIGINS = [
     "http://168.121.7.194:9001",
     "http://168.121.7.194:33871",
+    "http://contatos.invertusmkt.com.br",
 ]
 
+
+CORS_ALLOWED_ORIGINS = ['http://168.121.7.194:33871', "http://contatos.invertusmkt.com.br",]
 
 
 INSTALLED_APPS = [
@@ -37,6 +47,7 @@ INSTALLED_APPS = [
     "rest_framework_simplejwt",
     "corsheaders",
     "arquivos",
+    'import_export',
 ]
 
 MIDDLEWARE = [
@@ -56,7 +67,7 @@ ROOT_URLCONF = "core.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        'DIRS': [BASE_DIR / "templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -87,6 +98,7 @@ SIMPLE_JWT = {
 }
 
 
+CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
 
 
 # Database
@@ -103,7 +115,7 @@ SIMPLE_JWT = {
 
 DATABASES = {
     'default': dj_database_url.parse(
-        "postgresql://postgres.ugdcmbnfabwihmrolefi:Invertus2025@aws-0-sa-east-1.pooler.supabase.com:5432/postgres"
+        "postgresql://postgres.ugdcmbnfabwihmrolefi:Invertus%402026@aws-0-sa-east-1.pooler.supabase.com:5432/postgres"
     )
 }
 
@@ -128,6 +140,19 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
+# E-MAIL
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp-relay.brevo.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
+EMAIL_HOST_USER = '907c26001@smtp-brevo.com'
+EMAIL_HOST_PASSWORD = 'Pj4FsrNbMXE8TzZ0'      # <-- clique no olhinho 👁️ e copie a senha gerada
+
+DEFAULT_FROM_EMAIL = 'Invertus Tecnologia <producao@inoveempresarial.com.br>'
+
+
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
@@ -139,15 +164,15 @@ USE_I18N = True
 
 USE_TZ = True
 
-CORS_ALLOWED_ORIGINS = ['http://168.121.7.194:33871']
 
-DATA_UPLOAD_MAX_NUMBER_FIELDS = 1000000
+DATA_UPLOAD_MAX_MEMORY_SIZE = 1_000_000_000  
+FILE_UPLOAD_MAX_MEMORY_SIZE = 1_000_000_000  
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = "static/"
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

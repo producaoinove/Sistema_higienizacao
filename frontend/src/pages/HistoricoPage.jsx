@@ -1,18 +1,8 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../services/api";
 import {
-  Container,
-  Typography,
-  Grid,
-  Card,
-  CardContent,
-  CardActions,
-  Button,
-  CircularProgress,
-  Box,
-  Chip,
-  Divider,
-  TextField
+  Container, Typography, Grid, Card, CardContent, CardActions,
+  Button, CircularProgress, Box, Chip, Divider, TextField
 } from "@mui/material";
 import DownloadIcon from "@mui/icons-material/Download";
 import InsertDriveFileIcon from "@mui/icons-material/InsertDriveFile";
@@ -26,14 +16,49 @@ export default function HistoricoPage() {
   const [paginaAtual, setPaginaAtual] = useState(1);
   const itensPorPagina = 6;
 
-  const fetchArquivos = async () => {
-    const token = localStorage.getItem("token");
+
+  const handleDownload = async (id) => {
     try {
-      const response = await axios.get("http://168.121.7.194:9001/api/uploadarquivo/", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+      const response = await api.get(`baixar-processado/${id}/`, {
+        responseType: 'blob',
       });
+
+      if (!response || response.status !== 200) {
+        throw new Error('Erro ao baixar o arquivo');
+      }
+
+      const contentType = response.headers['content-type'] || '';
+      if (contentType.includes('text/html')) {
+        const reader = new FileReader();
+        reader.onload = () => {
+          console.error("⚠️ HTML recebido:", reader.result);
+        };
+        reader.readAsText(response.data);
+        throw new Error("Resposta inesperada (HTML recebido em vez do arquivo)");
+      }
+
+      const blob = new Blob([response.data], { type: contentType });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+
+      const contentDisposition = response.headers['content-disposition'];
+      const fileNameMatch = contentDisposition?.match(/filename="?([^"]+)"?/);
+      a.download = decodeURIComponent(fileNameMatch?.[1] || 'arquivo.csv');
+
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error('Erro ao baixar arquivo:', error);
+    }
+  };
+
+
+  const fetchArquivos = async () => {
+    try {
+      const response = await api.get("uploadarquivo/");
       setArquivos(response.data);
     } catch (error) {
       console.error("Erro ao carregar arquivos:", error);
@@ -51,10 +76,7 @@ export default function HistoricoPage() {
     const data = new Date(item.data_upload);
     const inicio = dataInicio ? new Date(dataInicio) : null;
     const fim = dataFim ? new Date(dataFim + "T23:59:59") : null;
-
-    const dentroDoIntervalo =
-      (!inicio || data >= inicio) && (!fim || data <= fim);
-
+    const dentroDoIntervalo = (!inicio || data >= inicio) && (!fim || data <= fim);
     return nome.includes(busca.toLowerCase()) && dentroDoIntervalo;
   });
 
@@ -66,54 +88,20 @@ export default function HistoricoPage() {
   return (
     <Container maxWidth="lg">
       <Box mt={5} mb={3} textAlign="center">
-        <Typography variant="h4" fontWeight="bold">
-          🗂 Histórico de Arquivos Enviados
-        </Typography>
+        <Typography variant="h4" fontWeight="bold">🗂 Histórico de Arquivos Enviados</Typography>
         <Typography variant="subtitle1" color="text.secondary">
           Consulte abaixo todos os arquivos processados
         </Typography>
 
         <Box mt={3} mb={2} display="flex" justifyContent="center" gap={2}>
-          <TextField
-            label="Buscar por nome"
-            variant="outlined"
-            size="small"
-            value={busca}
-            onChange={(e) => {
-              setBusca(e.target.value);
-              setPaginaAtual(1);
-            }}
-            sx={{ width: 250 }}
-          />
-          <TextField
-            label="Data início"
-            type="date"
-            size="small"
-            value={dataInicio}
-            onChange={(e) => {
-              setDataInicio(e.target.value);
-              setPaginaAtual(1);
-            }}
-            InputLabelProps={{ shrink: true }}
-          />
-          <TextField
-            label="Data fim"
-            type="date"
-            size="small"
-            value={dataFim}
-            onChange={(e) => {
-              setDataFim(e.target.value);
-              setPaginaAtual(1);
-            }}
-            InputLabelProps={{ shrink: true }}
-          />
+          <TextField label="Buscar por nome" variant="outlined" size="small" value={busca} onChange={(e) => { setBusca(e.target.value); setPaginaAtual(1); }} sx={{ width: 250 }} />
+          <TextField label="Data início" type="date" size="small" value={dataInicio} onChange={(e) => { setDataInicio(e.target.value); setPaginaAtual(1); }} InputLabelProps={{ shrink: true }} />
+          <TextField label="Data fim" type="date" size="small" value={dataFim} onChange={(e) => { setDataFim(e.target.value); setPaginaAtual(1); }} InputLabelProps={{ shrink: true }} />
         </Box>
       </Box>
 
       {loading ? (
-        <Box display="flex" justifyContent="center" mt={6}>
-          <CircularProgress />
-        </Box>
+        <Box display="flex" justifyContent="center" mt={6}><CircularProgress /></Box>
       ) : (
         <Grid container spacing={4}>
           {arquivosPaginados.map((item) => (
@@ -127,17 +115,34 @@ export default function HistoricoPage() {
                     </Typography>
                   </Box>
                   <Typography variant="body2" color="text.secondary">
-                    Enviado em:{" "}
-                    <strong>{new Date(item.data_upload).toLocaleString()}</strong>
+                    Enviado em: <strong>{new Date(item.data_upload).toLocaleString()}</strong>
                   </Typography>
                   <Divider sx={{ my: 1 }} />
-                  <Typography
-                    variant="body2"
-                    color={item.resumo_resultado ? "text.primary" : "warning.main"}
-                    fontStyle={!item.resumo_resultado ? "italic" : "normal"}
-                  >
-                    {item.resumo_resultado || "⏳ Aguardando processamento..."}
-                  </Typography>
+                  {item.resumo_resultado ? (
+                    (() => {
+                      let resumo;
+                      try {
+                        resumo = JSON.parse(item.resumo_resultado);
+                      } catch (e) {
+                        resumo = null;
+                      }
+
+                      return resumo ? (
+                        <Box>
+                          <Typography variant="body2"><strong>Total enviado:</strong> {resumo.total_entrada}</Typography>
+                          <Typography variant="body2"><strong>Encontrados na blacklist:</strong> {resumo.total_removidos}</Typography>
+                          <Typography variant="body2"><strong>Linhas excluídas:</strong> {resumo.linhas_removidas}</Typography>
+                          <Typography variant="body2" sx={{ color: "green" }}><strong>Total retorno:</strong> {resumo.total_retorno}</Typography>
+                        </Box>
+                      ) : (
+                        <Typography variant="body2" color="error">Erro ao ler o resumo</Typography>
+                      );
+                    })()
+                  ) : (
+                    <Typography variant="body2" color="warning.main" fontStyle="italic">
+                      ⏳ Aguardando processamento...
+                    </Typography>
+                  )}
                   <Box mt={2}>
                     {item.arquivo_processado ? (
                       <Chip label="Processado" color="success" />
@@ -153,8 +158,7 @@ export default function HistoricoPage() {
                       fullWidth
                       color="primary"
                       startIcon={<DownloadIcon />}
-                      href={item.arquivo_processado}
-                      target="_blank"
+                      onClick={() => handleDownload(item.id)}
                     >
                       Baixar Arquivo
                     </Button>
@@ -165,25 +169,12 @@ export default function HistoricoPage() {
           ))}
         </Grid>
       )}
+
       {totalPaginas > 1 && (
         <Box mt={4} display="flex" justifyContent="center" alignItems="center" gap={2}>
-          <Button
-            variant="outlined"
-            onClick={() => setPaginaAtual((prev) => Math.max(prev - 1, 1))}
-            disabled={paginaAtual === 1}
-          >
-            Anterior
-          </Button>
-          <Typography>
-            Página {paginaAtual} de {totalPaginas}
-          </Typography>
-          <Button
-            variant="outlined"
-            onClick={() => setPaginaAtual((prev) => Math.min(prev + 1, totalPaginas))}
-            disabled={paginaAtual === totalPaginas}
-          >
-            Próxima
-          </Button>
+          <Button variant="outlined" onClick={() => setPaginaAtual((prev) => Math.max(prev - 1, 1))} disabled={paginaAtual === 1}>Anterior</Button>
+          <Typography>Página {paginaAtual} de {totalPaginas}</Typography>
+          <Button variant="outlined" onClick={() => setPaginaAtual((prev) => Math.min(prev + 1, totalPaginas))} disabled={paginaAtual === totalPaginas}>Próxima</Button>
         </Box>
       )}
     </Container>

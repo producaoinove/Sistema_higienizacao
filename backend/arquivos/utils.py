@@ -1,20 +1,29 @@
 import pandas as pd
 import uuid
 import re
+import json
 import os
 from django.conf import settings
-from .models import BlacklistGlobal, EmpresaBlacklist
+from .models import BlacklistGlobal, EmpresaBlacklist, BlacklistItem
 
 
 def obter_blacklist(instancia, tipo_filtro: str) -> set:
     numeros = set()
 
     if tipo_filtro in ["cliente", "ambos"]:
+        # Inclui números da blacklist tradicional da empresa
         numeros.update(
             EmpresaBlacklist.objects
             .filter(empresa=instancia.empresa)
             .select_related("blacklist")
             .values_list("blacklist__numero", flat=True)
+        )
+
+        # Inclui números dos lotes criados pela empresa
+        numeros.update(
+            BlacklistItem.objects
+            .filter(lote__empresa=instancia.empresa)
+            .values_list("numero", flat=True)
         )
 
     if tipo_filtro in ["global", "ambos"]:
@@ -23,6 +32,7 @@ def obter_blacklist(instancia, tipo_filtro: str) -> set:
         )
 
     return numeros
+
 
 def padronizar_numero(ddd: str, telefone: str) -> str:
     if not telefone:
@@ -35,7 +45,8 @@ def padronizar_numero(ddd: str, telefone: str) -> str:
         return ddd + telefone
     return None
 
-def processar_arquivo(instancia, tipo_filtro="cliente"):
+
+def processar_arquivo(instancia, tipo_filtro="global"):
     base_blacklist = obter_blacklist(instancia, tipo_filtro)
     print(f"[DEBUG] Blacklist com {len(base_blacklist)} números")
 
@@ -150,10 +161,14 @@ def processar_arquivo(instancia, tipo_filtro="cliente"):
         df_final.to_excel(caminho_saida, index=False)
 
     instancia.arquivo_processado.name = f'processados/{nome_saida}'
-    instancia.resumo_resultado = (
-        f'{linhas_removidas} linhas removidas completamente, '
-        f'{numeros_removidos} números individuais removidos'
-    )
+    resumo = {
+    "total_entrada": total_entrada,
+    "total_retorno": total_retorno,
+    "total_removidos": numeros_removidos,
+    "linhas_removidas": linhas_removidas,
+}
+
+    instancia.resumo_resultado = json.dumps(resumo)
     instancia.save()
 
     return {
@@ -162,5 +177,27 @@ def processar_arquivo(instancia, tipo_filtro="cliente"):
         "total_retorno": total_retorno,
         "total_removidos": numeros_removidos,
         "linhas_removidas": linhas_removidas,
-        "arquivo_processado": f"{settings.MEDIA_URL}{instancia.arquivo_processado.name}"
+        "arquivo_processado": f"{settings.MEDIA_URL}{instancia.arquivo_processado.name}",
+        "arquivo_url": instancia.arquivo_processado.url
     }
+
+
+
+
+def clean_phone(value: str) -> str | None:
+    """
+    Remove tudo que não for dígito.
+    Se vier em notação científica (E+), descarta.
+    """
+    if not value:
+        return None
+
+    value = value.replace(",", ".").upper()
+    if "E+" in value:          # 9,53E+09  ➜  ignora
+        return None
+
+    digits = re.sub(r"\D", "", value)
+    return digits or None
+
+
+

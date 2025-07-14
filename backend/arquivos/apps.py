@@ -2,5 +2,5 @@ from django.apps import AppConfig
 
 
 class ArquivosConfig(AppConfig):
-    default_auto_field = "django.db.models.BigAutoField"
-    name = "arquivos"
+    default_auto_field = 'django.db.models.BigAutoField'
+    name = 'arquivos'

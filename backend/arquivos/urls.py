@@ -1,6 +1,22 @@
 from django.urls import path
+from django.views.decorators.csrf import csrf_exempt
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
-from .views import UploadArquivoView, UploadArquivoListView, me_view, change_password_view, register_view, reset_password_view, upload_blacklist_cliente, criar_usuario_empresa, listar_blacklist_cliente, remover_numero_blacklist, adicionar_blacklist_manual, baixar_blacklist_cliente
+from .views import UploadArquivoView, UploadArquivoListView, me_view, change_password_view, register_view, reset_password_view, upload_blacklist_cliente, criar_usuario_empresa, listar_blacklist_cliente, remover_numero_blacklist, adicionar_blacklist_manual, baixar_blacklist_cliente, editar_numero_do_lote, remover_numero_do_lote, criar_lote_blacklist, listar_numeros_do_lote, excluir_lote, listar_lotes_blacklist, renomear_lote
+from .views import (
+    solicitar_redefinicao_senha,
+    confirmar_redefinicao_senha,
+    status_processamento_view,
+    status_upload_view,
+    evento_processamento,
+    UploadArquivoDetailView,
+    download_arquivo_processado,
+    filtrar_cnpjs,
+    listar_cidades_por_uf,
+    listar_cnaes,
+    iniciar_exportacao,
+    verificar_progresso,
+    baixar_arquivo,
+)
 
 urlpatterns = [
     path('login/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
@@ -8,6 +24,8 @@ urlpatterns = [
     path('upload/', UploadArquivoView.as_view(), name='upload_arquivo'),
     path('uploadarquivo/', UploadArquivoListView.as_view(), name='lista_uploads'),
     path("change-password/", change_password_view, name="change_password"),
+    path("redefinir-senha/", solicitar_redefinicao_senha, name="solicitar_redefinicao_senha"),
+    path("redefinir-senha/<uidb64>/<token>/", confirmar_redefinicao_senha, name="confirmar_redefinicao_senha"),
     path("register/", register_view, name="register"),
     path("reset-password/", reset_password_view, name="reset_password"),
     path("me/", me_view, name="me"),
@@ -16,4 +34,23 @@ urlpatterns = [
     path("blacklist_cliente/<int:pk>/", remover_numero_blacklist),
     path("adicionar_blacklist_cliente/", adicionar_blacklist_manual),
     path("baixar_blacklist_cliente/", baixar_blacklist_cliente),
+    path("blacklist/lote/<int:lote_id>/editar/<str:numero_antigo>/", editar_numero_do_lote),
+    path("blacklist/lote/<int:lote_id>/remover/<str:numero>/", remover_numero_do_lote),
+    path("blacklist/lote/criar/", criar_lote_blacklist, name="criar_lote_blacklist"),
+    path("blacklist/lote/<int:lote_id>/numeros/", listar_numeros_do_lote, name="listar_numeros_do_lote"),
+    path("blacklist/lote/<int:lote_id>/excluir/", excluir_lote, name="excluir_lote"),
+    path("blacklist/lote/", listar_lotes_blacklist, name="listar_lotes_blacklist"),
+    path("blacklist/lote/<int:lote_id>/renomear/", renomear_lote, name="renomear_lote"),
+    path("upload/status/<int:id>/", status_processamento_view),
+    path('upload/status/<int:pk>/', status_upload_view),
+    path("eventos/processamento/<int:upload_id>/", evento_processamento, name="evento-processamento"),
+    path("uploadarquivo/<int:pk>/", UploadArquivoDetailView.as_view(), name="upload-detalhe"),
+    path('usuarios/empresa/', criar_usuario_empresa, name='criar_usuario_empresa'),
+    path("baixar-processado/<int:arquivo_id>/", download_arquivo_processado, name="baixar_processado"),
+    path("gerarMailing/", filtrar_cnpjs),
+    path("cidades/", listar_cidades_por_uf),
+    path("cnaes/", listar_cnaes),
+    path("async/tasks/", csrf_exempt(iniciar_exportacao)),
+    path("async/tasks/<uuid:task_id>/", csrf_exempt(verificar_progresso)),
+    path("async/tasks/<uuid:task_id>/download/", csrf_exempt(baixar_arquivo)),
 ]
